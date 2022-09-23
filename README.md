@@ -9,11 +9,11 @@
 
 ## Game Design
 
--   Camera Orientation: _How are the art assets viewed from? (ie. topdown or side)_
--   Camera Movement: _How does the camera move in your game? (if at all)_
--   Player Health: _How are you handling player health? (healthbar, lives, ?)_
--   End Condition: _How does a game/round/level end?_
--   Scoring: _How does the player earn points in your game?_
+-   Camera Orientation: Long vertical camera, enemies appear from the top
+-   Camera Movement: May implement a looping scrolling background
+-   Player Health: The player's health will be represented by a health bar
+-   End Condition: If the player survives a given level or enough waves of enemies, they may not necessarily have to defeat all enemies.
+-   Scoring: Scoring will be done with bonuses for each enemy the player defeats.
 
 ### Game Description
 
@@ -30,19 +30,6 @@ Vertical oriented SHMUP bullet hell.
 
 ## Make it Your Own
  * I will be implementing multiple enemy types as well as start and game over menus.
-
-## Player Movement
- * Movement is controlled by WASD and/or the Arrow Keys
- * Player can hug, but does not warp through the edges of the screen.
- 
-## Player Health (TODO)
- * The player's health will be represented via a health bar.
- 
-## Player Weapon (TODO)
- * Shoot either by holding down or pressing 'P'
- 
-## Enemies (TODO)
- * tbd
 
 ## Sources
 Player ship sprite - https://opengameart.org/content/spaceship-8
