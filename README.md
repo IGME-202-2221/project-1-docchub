@@ -31,8 +31,6 @@ Vertical oriented SHMUP bullet hell.
 ## Make it Your Own
  * I will be implementing multiple enemy types as well as start and game over menus.
 
-## Documentation of Borrowed Assets
-
 ## Player Movement
  * Movement is controlled by WASD and/or the Arrow Keys
  * Player can hug, but does not warp through the edges of the screen.
