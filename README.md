@@ -17,7 +17,7 @@
 
 ### Game Description
 
-Vertical oriented SHMUP bullet hell.
+A top down shoot-em-up bullet hell where you control a spaceship fighting potatoes/asteroids in space.
 
 ### Controls
 
