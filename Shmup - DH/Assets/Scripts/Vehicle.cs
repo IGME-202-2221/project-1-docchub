@@ -12,8 +12,8 @@ public class Vehicle : MonoBehaviour
     Vector3 direction = Vector3.zero;
     Vector3 velocity = Vector3.zero;
 
-    float screenWidthWall = 3;
-    float screenHeightWall = 5;
+    const float screenWidthWall = 3;
+    const float screenHeightWall = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -33,21 +33,25 @@ public class Vehicle : MonoBehaviour
         transform.position = vehiclePosition;
 
         // Prevent moving outside the bounds
-        if (vehiclePosition.x > screenWidthWall)
+        if (vehiclePosition.x >= screenWidthWall)
         {
             vehiclePosition = new Vector3(screenWidthWall, vehiclePosition.y, 0);
+            transform.position = new Vector3(screenWidthWall, vehiclePosition.y, 0);
         }
-        else if (vehiclePosition.x < -screenWidthWall)
+        else if (vehiclePosition.x <= -screenWidthWall)
         {
             vehiclePosition = new Vector3(-screenWidthWall, vehiclePosition.y, 0);
+            transform.position = new Vector3(-screenWidthWall, vehiclePosition.y, 0);
         }
-        if (vehiclePosition.y > screenHeightWall)
+        if (vehiclePosition.y >= screenHeightWall)
         {
             vehiclePosition = new Vector3(vehiclePosition.x, screenHeightWall, 0);
+            transform.position = new Vector3(vehiclePosition.x, screenHeightWall, 0);
         }
-        else if (vehiclePosition.y < -screenHeightWall)
+        else if (vehiclePosition.y <= -screenHeightWall)
         {
             vehiclePosition = new Vector3(vehiclePosition.x, -screenHeightWall, 0);
+            transform.position = new Vector3(vehiclePosition.x, -screenHeightWall, 0);
         }
     }
 
