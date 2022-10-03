@@ -33,7 +33,8 @@ A top down shoot-em-up bullet hell where you control a spaceship fighting potato
 
 ## Sources
 Player/Enemy1 ship sprite - https://opengameart.org/content/spaceship-8
-Bullet sprites - https://opengameart.org/content/bullet-collection-2-m484-games
+Bullets - https://opengameart.org/content/bullet-collection-2-m484-games
+Asteroid (Enemy2) - https://opengameart.org/content/brown-asteroid
 
 ## Known Issues
 _List any errors, lack of error checking, or specific information that I need to know to run your program_
