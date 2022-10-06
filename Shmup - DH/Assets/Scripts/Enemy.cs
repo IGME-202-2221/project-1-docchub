@@ -24,6 +24,9 @@ public class Enemy : MonoBehaviour
     {
         enemyPosition = transform.position;
         direction = new Vector3(0, -1, 0);
+
+        // Random chance to fire a bullet
+        StartCoroutine(Shoot());
     }
 
     // Update is called once per frame
@@ -37,12 +40,6 @@ public class Enemy : MonoBehaviour
 
         transform.position = enemyPosition;
 
-        // Random chance to fire a bullet
-        if (Random.Range(0,1000) == 1)
-        {
-            bullets.Add(Instantiate(bullet, transform.position, new Quaternion(0, 0, 180, 0), transform));
-        }
-
         // Clean up stray bullets
         foreach (GameObject b in bullets)
         {
@@ -52,6 +49,15 @@ public class Enemy : MonoBehaviour
                 bullets.Remove(b);
                 return;
             }
+        }
+    }
+
+    IEnumerator Shoot()
+    {
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(Random.Range(2,5));
+            bullets.Add(Instantiate(bullet, transform.position, new Quaternion(0, 0, 180, 0), transform));
         }
     }
 
