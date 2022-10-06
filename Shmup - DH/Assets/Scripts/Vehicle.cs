@@ -2,23 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
+using UnityEngine.InputSystem.LowLevel;
 
 public class Vehicle : MonoBehaviour
 {
     [SerializeField]
     float speed = 1f;
 
+    [SerializeField]
+    GameObject bullet;
+    List<GameObject> bullets = new List<GameObject>();
+
     Vector3 vehiclePosition = Vector3.zero;
     Vector3 direction = Vector3.zero;
     Vector3 velocity = Vector3.zero;
 
-    const float screenWidthWall = 3;
-    const float screenHeightWall = 5;
+    [SerializeField]
+    float fireRate;
+    bool rapidFire;
+    bool cRunning;
+
+    const float screenWidthWall = 4f;
+    const float screenHeightWall = 5f;
 
     // Start is called before the first frame update
     void Start()
     {
         vehiclePosition = transform.position;
+        rapidFire = false;
     }
 
     // Update is called once per frame
@@ -53,6 +65,28 @@ public class Vehicle : MonoBehaviour
             vehiclePosition = new Vector3(vehiclePosition.x, -screenHeightWall, 0);
             transform.position = new Vector3(vehiclePosition.x, -screenHeightWall, 0);
         }
+
+        // Clean up stray bullets
+        foreach (GameObject b in bullets)
+        {
+            if (b.transform.position.y > screenHeightWall)
+            {
+                Destroy(b);
+                bullets.Remove(b);
+                return;
+            }
+        }
+
+        // Rapid fire mode
+        if (rapidFire && !cRunning)
+        {
+            StartCoroutine(RapidFire());
+        }
+        else if (!rapidFire)
+        {
+            StopAllCoroutines();
+            cRunning = false;
+        }
     }
 
     /// <summary>
@@ -62,5 +96,47 @@ public class Vehicle : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {    
         direction = context.ReadValue<Vector2>();
+    }
+
+    /// <summary>
+    /// Spawns a bullet
+    /// </summary>
+    public void Shoot(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("attempted to spawn bullet");
+            bullets.Add(Instantiate(bullet, transform.position, Quaternion.identity, transform));
+            rapidFire = true;
+        }
+
+        if (context.canceled)
+        {
+            Debug.Log("fire button released");
+            rapidFire = false;
+        }
+    }
+
+    public List<GameObject> GetPlayerBullets()
+    {
+        if (bullets != null && bullets.Count > 0)
+        {
+            return bullets;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    IEnumerator RapidFire()
+    {
+        cRunning = true;
+
+        while (rapidFire)
+        {
+            yield return new WaitForSecondsRealtime(fireRate);
+            bullets.Add(Instantiate(bullet, transform.position, Quaternion.identity, transform));
+        }
     }
 }
