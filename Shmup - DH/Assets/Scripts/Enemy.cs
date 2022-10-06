@@ -40,7 +40,6 @@ public class Enemy : MonoBehaviour
         // Random chance to fire a bullet
         if (Random.Range(0,1000) == 1)
         {
-            Debug.Log("fired an enemy bullet");
             bullets.Add(Instantiate(bullet, transform.position, new Quaternion(0, 0, 180, 0), transform));
         }
 
@@ -54,5 +53,17 @@ public class Enemy : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public List<GameObject> GetEnemyBullets()
+    {        
+        if (bullets != null && bullets.Count > 0)
+        {
+            return bullets;
+        }
+        else
+        {
+            return null;
+        }        
     }
 }

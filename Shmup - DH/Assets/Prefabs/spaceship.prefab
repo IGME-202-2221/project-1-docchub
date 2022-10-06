@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
+  health: 100
   bullet: {fileID: 8521449939632882425, guid: c6acf1e3ec427584a84b9b5987c8ef7e, type: 3}
   fireRate: 0.1
 --- !u!114 &8328356400718606072

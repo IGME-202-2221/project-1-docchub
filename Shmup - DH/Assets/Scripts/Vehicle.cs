@@ -9,6 +9,7 @@ public class Vehicle : MonoBehaviour
 {
     [SerializeField]
     float speed = 1f;
+    public int health;
 
     [SerializeField]
     GameObject bullet;
