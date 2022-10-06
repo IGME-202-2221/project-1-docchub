@@ -36,5 +36,23 @@ public class Enemy : MonoBehaviour
         enemyPosition += velocity;
 
         transform.position = enemyPosition;
+
+        // Random chance to fire a bullet
+        if (Random.Range(0,1000) == 1)
+        {
+            Debug.Log("fired an enemy bullet");
+            bullets.Add(Instantiate(bullet, transform.position, new Quaternion(0, 0, 180, 0), transform));
+        }
+
+        // Clean up stray bullets
+        foreach (GameObject b in bullets)
+        {
+            if (b.transform.position.y < -screenHeightWall)
+            {
+                Destroy(b);
+                bullets.Remove(b);
+                return;
+            }
+        }
     }
 }
