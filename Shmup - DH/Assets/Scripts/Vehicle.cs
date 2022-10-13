@@ -106,6 +106,7 @@ public class Vehicle : MonoBehaviour
         }
         else
         {
+            StopAllCoroutines();
             this.GetComponent<SpriteRenderer>().color = Color.red;
         }
     }
@@ -124,17 +125,20 @@ public class Vehicle : MonoBehaviour
     /// </summary>
     public void Shoot(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (health > 0)
         {
-            Debug.Log("attempted to spawn bullet");
-            bullets.Add(Instantiate(bullet, transform.position, Quaternion.identity, transform));
-            rapidFire = true;
-        }
+            if (context.performed)
+            {
+                Debug.Log("attempted to spawn bullet");
+                bullets.Add(Instantiate(bullet, transform.position, Quaternion.identity, transform));
+                rapidFire = true;
+            }
 
-        if (context.canceled)
-        {
-            Debug.Log("fire button released");
-            rapidFire = false;
+            if (context.canceled)
+            {
+                Debug.Log("fire button released");
+                rapidFire = false;
+            }
         }
     }
 
