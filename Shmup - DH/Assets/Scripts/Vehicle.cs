@@ -42,64 +42,71 @@ public class Vehicle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {        
-        // Update veloctity
-        velocity = direction * speed * Time.deltaTime;
+        if (health > 0)
+        {
+            // Update veloctity
+            velocity = direction * speed * Time.deltaTime;
 
-        // Add velocity to our current position
-        vehiclePosition += velocity;
+            // Add velocity to our current position
+            vehiclePosition += velocity;
 
-        // Draw at calculated position
-        transform.position = vehiclePosition;
+            // Draw at calculated position
+            transform.position = vehiclePosition;
 
-        // Visualize losing health
-        if (prevHealth > health)
-        {
-            StartCoroutine(CheckHealth());
-            prevHealth = health;
-        }
-
-        // Prevent moving outside the bounds
-        if (vehiclePosition.x >= screenWidthWall)
-        {
-            vehiclePosition = new Vector3(screenWidthWall, vehiclePosition.y, 0);
-            transform.position = new Vector3(screenWidthWall, vehiclePosition.y, 0);
-        }
-        else if (vehiclePosition.x <= -screenWidthWall)
-        {
-            vehiclePosition = new Vector3(-screenWidthWall, vehiclePosition.y, 0);
-            transform.position = new Vector3(-screenWidthWall, vehiclePosition.y, 0);
-        }
-        if (vehiclePosition.y >= screenHeightWall)
-        {
-            vehiclePosition = new Vector3(vehiclePosition.x, screenHeightWall, 0);
-            transform.position = new Vector3(vehiclePosition.x, screenHeightWall, 0);
-        }
-        else if (vehiclePosition.y <= -screenHeightWall)
-        {
-            vehiclePosition = new Vector3(vehiclePosition.x, -screenHeightWall, 0);
-            transform.position = new Vector3(vehiclePosition.x, -screenHeightWall, 0);
-        }
-
-        // Clean up stray bullets
-        foreach (GameObject b in bullets)
-        {
-            if (b.transform.position.y > screenHeightWall)
+            // Visualize losing health
+            if (prevHealth > health)
             {
-                Destroy(b);
-                bullets.Remove(b);
-                return;
+                StartCoroutine(CheckHealth());
+                prevHealth = health;
+            }
+
+            // Prevent moving outside the bounds
+            if (vehiclePosition.x >= screenWidthWall)
+            {
+                vehiclePosition = new Vector3(screenWidthWall, vehiclePosition.y, 0);
+                transform.position = new Vector3(screenWidthWall, vehiclePosition.y, 0);
+            }
+            else if (vehiclePosition.x <= -screenWidthWall)
+            {
+                vehiclePosition = new Vector3(-screenWidthWall, vehiclePosition.y, 0);
+                transform.position = new Vector3(-screenWidthWall, vehiclePosition.y, 0);
+            }
+            if (vehiclePosition.y >= screenHeightWall)
+            {
+                vehiclePosition = new Vector3(vehiclePosition.x, screenHeightWall, 0);
+                transform.position = new Vector3(vehiclePosition.x, screenHeightWall, 0);
+            }
+            else if (vehiclePosition.y <= -screenHeightWall)
+            {
+                vehiclePosition = new Vector3(vehiclePosition.x, -screenHeightWall, 0);
+                transform.position = new Vector3(vehiclePosition.x, -screenHeightWall, 0);
+            }
+
+            // Clean up stray bullets
+            foreach (GameObject b in bullets)
+            {
+                if (b.transform.position.y > screenHeightWall)
+                {
+                    Destroy(b);
+                    bullets.Remove(b);
+                    return;
+                }
+            }
+
+            // Rapid fire mode
+            if (rapidFire && !cRunning)
+            {
+                StartCoroutine(RapidFire());
+            }
+            else if (!rapidFire)
+            {
+                StopCoroutine(RapidFire());
+                cRunning = false;
             }
         }
-
-        // Rapid fire mode
-        if (rapidFire && !cRunning)
+        else
         {
-            StartCoroutine(RapidFire());
-        }
-        else if (!rapidFire)
-        {
-            StopCoroutine(RapidFire());
-            cRunning = false;
+            this.GetComponent<SpriteRenderer>().color = Color.red;
         }
     }
 

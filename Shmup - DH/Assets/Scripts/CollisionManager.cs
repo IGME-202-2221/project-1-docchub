@@ -48,8 +48,6 @@ public class CollisionManager : MonoBehaviour
                 {
                     if (GetComponent<CollisionDetection>().AABBCollision(a, b))
                     {
-                        Debug.Log("Saw a collision");
-
                         // Deal damage to enemy
                         if (a.name == "enemy1(Clone)")
                         {
@@ -95,10 +93,9 @@ public class CollisionManager : MonoBehaviour
                     {
                         if (GetComponent<CollisionDetection>().AABBCollision(player, b))
                         {
-                            Debug.Log("Saw a collision");
-
                             // Deal damage to player
                             player.GetComponent<Vehicle>().health -= 5;
+                            FindObjectOfType<Timer>().health -= 5;
                             FindObjectOfType<HealthBar>().SetHealth(player.GetComponent<Vehicle>().health);
 
                             // Destroy the bullet that collided with the enemy
@@ -109,7 +106,25 @@ public class CollisionManager : MonoBehaviour
                         }
                     }
                 }
-            }           
+            }
+            
+            // Collisions for Asteroids on Player
+            else if (enemy.name == "asteroid(Clone)" || enemy.name == "asteroidChild(Clone)")
+            {
+                if (GetComponent<CollisionDetection>().AABBCollision(player, enemy))
+                {
+                    // Deal damage to player
+                    player.GetComponent<Vehicle>().health -= 5;
+                    FindObjectOfType<Timer>().health -= 5;
+                    FindObjectOfType<HealthBar>().SetHealth(player.GetComponent<Vehicle>().health);
+
+                    // Destroy the object that collided with the enemy
+                    Destroy(enemy);
+                    enemies.Remove(enemy);
+
+                    return;
+                }
+            }
         }
     }
 }

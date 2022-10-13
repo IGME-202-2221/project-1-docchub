@@ -17,9 +17,6 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     Vector2[] spawnPositions;
 
-    [SerializeField]
-    Vector2 asteroidSpawnPos;
-
     List<GameObject> enemies = new List<GameObject>();
 
     const float screenWidthWall = 4f;
@@ -27,12 +24,14 @@ public class Spawner : MonoBehaviour
 
     const float enemySpawnRate = 10f;
 
+    bool spawnEnemies;
+
     // Start is called before the first frame update
     void Start()
     {
+        spawnEnemies = true;
         StartCoroutine(SpawnEnemies());
-
-        SpawnAsteroid();
+        StartCoroutine(SpawnAsteroids());
     }
 
     // Update is called once per frame
@@ -43,8 +42,15 @@ public class Spawner : MonoBehaviour
         {
             if (e.name == "enemy1(Clone)")
             {
-                if (e.transform.position.y < -screenHeightWall ||
-                    e.GetComponent<Enemy>().health <= 0)
+                if (e.transform.position.y < -screenHeightWall)
+                {
+                    Destroy(e);
+                    enemies.Remove(e);
+                    return;
+                }
+
+                // Only increase score if the player killed the enemy
+                else if (e.GetComponent<Enemy>().health <= 0)
                 {
                     FindObjectOfType<Score>().ScoreUpdate();
                     Destroy(e);
@@ -54,8 +60,15 @@ public class Spawner : MonoBehaviour
             }            
             else if (e.name == "asteroid(Clone)" || e.name == "asteroidChild(Clone)")
             {
-                if (e.transform.position.y < -screenHeightWall ||
-                    e.GetComponent<Asteroid>().health <= 0)
+                if (e.transform.position.y < -screenHeightWall)
+                {
+                    Destroy(e);
+                    enemies.Remove(e);
+                    return;
+                }
+
+                // Only increase score if the player killed the enemy
+                else if (e.GetComponent<Asteroid>().health <= 0)
                 {
                     FindObjectOfType<Score>().ScoreUpdate();
                     OnDeath(e);
@@ -74,10 +87,19 @@ public class Spawner : MonoBehaviour
     IEnumerator SpawnEnemies()
     {
         // Enemy1 spawn rate
-        while (true)
+        while (spawnEnemies)
         {
             Spawn();
             yield return new WaitForSeconds(enemySpawnRate);
+        }
+    }
+
+    IEnumerator SpawnAsteroids()
+    {
+        while (spawnEnemies)
+        {
+            SpawnAsteroid();
+            yield return new WaitForSeconds(Random.Range(3f, 7f));
         }
     }
 
@@ -97,7 +119,7 @@ public class Spawner : MonoBehaviour
     /// </summary>
     void SpawnAsteroid()
     {
-        enemies.Add(Instantiate(asteroid, asteroidSpawnPos, Quaternion.identity, transform));
+        enemies.Add(Instantiate(asteroid, new Vector2(Random.Range(-2f, 2f), 5.5f), Quaternion.identity, transform));
     }
 
     /// <summary>

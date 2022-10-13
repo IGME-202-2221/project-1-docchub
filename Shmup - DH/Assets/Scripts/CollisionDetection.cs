@@ -53,7 +53,6 @@ public class CollisionDetection : MonoBehaviour
         // Check to see if the vehicle and a given object are colliding
         if (aMaxX > bMinX && aMinX < bMaxX && aMinY < bMaxY && aMaxY > bMinY)
         {
-            Debug.Log("AABB collision");
             return true;
         }
         else

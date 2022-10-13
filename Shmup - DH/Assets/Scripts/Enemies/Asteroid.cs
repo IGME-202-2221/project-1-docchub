@@ -25,7 +25,7 @@ public class Asteroid : MonoBehaviour
     void Start()
     {
         enemyPosition = transform.position;
-        direction = new Vector3(Random.Range(-0.5f, 0.5f), -1, 0).normalized;
+        direction = new Vector3(Random.Range(-0.8f, 0.8f), -1, 0).normalized;
 
         prevHealth = health;
     }
@@ -39,7 +39,18 @@ public class Asteroid : MonoBehaviour
         // Add velocity to our current position
         enemyPosition += velocity;
 
+        // Draw at calculated position
         transform.position = enemyPosition;
+
+        // Bounce off walls
+        if (transform.position.x <= -screenWidthWall)
+        {
+            direction = new Vector3(Random.Range(0.1f, 0.7f), -1, 0).normalized;
+        }
+        else if (transform.position.x >= screenWidthWall)
+        {
+            direction = new Vector3(Random.Range(-0.1f, -0.7f), -1, 0).normalized;
+        }
 
         // Indicate if health is lost
         if (prevHealth > health)
