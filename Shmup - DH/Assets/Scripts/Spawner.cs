@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.VisualScripting.Metadata;
 
 public class Spawner : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class Spawner : MonoBehaviour
 
     [SerializeField]
     GameObject asteroid;
+
+    [SerializeField]
+    GameObject children;
 
     [SerializeField]
     Vector2[] spawnPositions;
@@ -52,7 +56,7 @@ public class Spawner : MonoBehaviour
                 if (e.transform.position.y < -screenHeightWall ||
                     e.GetComponent<Asteroid>().health <= 0)
                 {
-                    FindObjectOfType<Asteroid>().OnDeath();
+                    OnDeath(e);
                     Destroy(e);
                     enemies.Remove(e);
                     return;
@@ -92,6 +96,23 @@ public class Spawner : MonoBehaviour
     void SpawnAsteroid()
     {
         enemies.Add(Instantiate(asteroid, asteroidSpawnPos, Quaternion.identity, transform));
+    }
+
+    /// <summary>
+    /// Spawns asteroid children
+    /// </summary>
+    void OnDeath(GameObject asteroid)
+    {
+        if (asteroid.GetComponent<Asteroid>().hasChildren)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                enemies.Add(Instantiate(
+                        children, 
+                        new Vector3(asteroid.transform.position.x, asteroid.transform.position.y, 0), 
+                        Quaternion.identity));
+            }
+        }
     }
 
     /// <summary>

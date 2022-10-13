@@ -10,11 +10,7 @@ public class Asteroid : MonoBehaviour
     public int health = 25;
     int prevHealth;
 
-    [SerializeField]
-    GameObject children;
-
-    [SerializeField]
-    bool hasChildren;
+    public bool hasChildren;
 
     Vector3 enemyPosition;
     Vector3 direction = Vector3.zero;
@@ -51,12 +47,6 @@ public class Asteroid : MonoBehaviour
             StartCoroutine(CheckHealth());
             prevHealth = health;
         }
-    }
-
-    public void OnDeath()
-    {
-        Instantiate(children, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-        Instantiate(children, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
     }
 
     /// <summary>

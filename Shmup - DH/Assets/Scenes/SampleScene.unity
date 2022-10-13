@@ -566,6 +566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5477190401444312303, guid: 6e7c5fed98760e043907cee1242c5be0, type: 3}
   asteroid: {fileID: 3208592932549241786, guid: d40a652e52fa02548980162b43f5a168, type: 3}
+  children: {fileID: 9103526394921931275, guid: 9689645eb8b6d15488b142170a2cf332, type: 3}
   spawnPositions:
   - {x: 0, y: 6}
   - {x: 1.5, y: 6.3}
