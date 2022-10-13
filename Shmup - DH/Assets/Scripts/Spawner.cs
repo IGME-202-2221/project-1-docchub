@@ -46,6 +46,7 @@ public class Spawner : MonoBehaviour
                 if (e.transform.position.y < -screenHeightWall ||
                     e.GetComponent<Enemy>().health <= 0)
                 {
+                    FindObjectOfType<Score>().ScoreUpdate();
                     Destroy(e);
                     enemies.Remove(e);
                     return;
@@ -56,6 +57,7 @@ public class Spawner : MonoBehaviour
                 if (e.transform.position.y < -screenHeightWall ||
                     e.GetComponent<Asteroid>().health <= 0)
                 {
+                    FindObjectOfType<Score>().ScoreUpdate();
                     OnDeath(e);
                     Destroy(e);
                     enemies.Remove(e);

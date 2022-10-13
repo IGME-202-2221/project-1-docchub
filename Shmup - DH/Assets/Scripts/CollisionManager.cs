@@ -99,6 +99,7 @@ public class CollisionManager : MonoBehaviour
 
                             // Deal damage to player
                             player.GetComponent<Vehicle>().health -= 5;
+                            FindObjectOfType<HealthBar>().SetHealth(player.GetComponent<Vehicle>().health);
 
                             // Destroy the bullet that collided with the enemy
                             Destroy(b);
