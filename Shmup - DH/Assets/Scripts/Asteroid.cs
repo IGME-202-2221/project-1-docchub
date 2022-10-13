@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Asteroid : MonoBehaviour
 {
     [SerializeField]
     float speed = 1f;
@@ -10,8 +11,10 @@ public class Enemy : MonoBehaviour
     int prevHealth;
 
     [SerializeField]
-    GameObject bullet;
-    List<GameObject> bullets = new List<GameObject>();
+    GameObject children;
+
+    [SerializeField]
+    bool hasChildren;
 
     Vector3 enemyPosition;
     Vector3 direction = Vector3.zero;
@@ -26,12 +29,9 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         enemyPosition = transform.position;
-        direction = new Vector3(0, -1, 0);
+        direction = new Vector3(Random.Range(-0.5f, 0.5f), -1, 0).normalized;
 
         prevHealth = health;
-
-        // Random chance to fire a bullet
-        StartCoroutine(Shoot());
     }
 
     // Update is called once per frame
@@ -51,38 +51,12 @@ public class Enemy : MonoBehaviour
             StartCoroutine(CheckHealth());
             prevHealth = health;
         }
-
-        // Clean up stray bullets
-        foreach (GameObject b in bullets)
-        {
-            if (b.transform.position.y < -screenHeightWall)
-            {
-                Destroy(b);
-                bullets.Remove(b);
-                return;
-            }
-        }
     }
 
-    IEnumerator Shoot()
+    public void OnDeath()
     {
-        while (true)
-        {
-            yield return new WaitForSecondsRealtime(Random.Range(2,5));
-            bullets.Add(Instantiate(bullet, transform.position, new Quaternion(0, 0, 180, 0), transform));
-        }
-    }
-
-    public List<GameObject> GetEnemyBullets()
-    {        
-        if (bullets != null && bullets.Count > 0)
-        {
-            return bullets;
-        }
-        else
-        {
-            return null;
-        }        
+        Instantiate(children, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+        Instantiate(children, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
     }
 
     /// <summary>
@@ -92,7 +66,7 @@ public class Enemy : MonoBehaviour
     {
         this.GetComponent<SpriteRenderer>().color = Color.red;
         yield return new WaitForSecondsRealtime(hitStateLength);
-        this.GetComponent<SpriteRenderer>().color = Color.green;
+        this.GetComponent<SpriteRenderer>().color = Color.white;
         StopCoroutine(CheckHealth());
     }
 }

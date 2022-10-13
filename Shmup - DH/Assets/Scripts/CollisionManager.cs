@@ -51,7 +51,14 @@ public class CollisionManager : MonoBehaviour
                         Debug.Log("Saw a collision");
 
                         // Deal damage to enemy
-                        a.GetComponent<Enemy>().health -= 5;
+                        if (a.name == "enemy1(Clone)")
+                        {
+                            a.GetComponent<Enemy>().health -= 5;
+                        }
+                        else if (a.name == "asteroid(Clone)" || a.name == "asteroidChild(Clone)")
+                        {
+                            a.GetComponent<Asteroid>().health -= 5;
+                        }
 
                         // Destroy the bullet that collided with the enemy
                         Destroy(b);
@@ -76,28 +83,32 @@ public class CollisionManager : MonoBehaviour
         }
         foreach (GameObject enemy in enemies)
         {
-            enemyBullets = enemy.GetComponent<Enemy>().GetEnemyBullets();
-
-            // Check for collisions between the player and the enemy's bullets
-            if (enemyBullets != null && enemyBullets.Count > 0)
+            // Only check for bullets from certain enemies
+            if (enemy.name == "enemy1(Clone)")
             {
-                foreach (GameObject b in enemyBullets)
+                enemyBullets = enemy.GetComponent<Enemy>().GetEnemyBullets();
+
+                // Check for collisions between the player and the enemy's bullets
+                if (enemyBullets != null && enemyBullets.Count > 0)
                 {
-                    if (GetComponent<CollisionDetection>().AABBCollision(player, b))
+                    foreach (GameObject b in enemyBullets)
                     {
-                        Debug.Log("Saw a collision");
+                        if (GetComponent<CollisionDetection>().AABBCollision(player, b))
+                        {
+                            Debug.Log("Saw a collision");
 
-                        // Deal damage to player
-                        player.GetComponent<Vehicle>().health -= 5;
+                            // Deal damage to player
+                            player.GetComponent<Vehicle>().health -= 5;
 
-                        // Destroy the bullet that collided with the enemy
-                        Destroy(b);
-                        enemyBullets.Remove(b);
+                            // Destroy the bullet that collided with the enemy
+                            Destroy(b);
+                            enemyBullets.Remove(b);
 
-                        return;
+                            return;
+                        }
                     }
                 }
-            }
+            }           
         }
     }
 }

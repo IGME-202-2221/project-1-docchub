@@ -565,12 +565,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 5477190401444312303, guid: 6e7c5fed98760e043907cee1242c5be0, type: 3}
+  asteroid: {fileID: 3208592932549241786, guid: d40a652e52fa02548980162b43f5a168, type: 3}
   spawnPositions:
   - {x: 0, y: 6}
   - {x: 1.5, y: 6.3}
   - {x: -1.5, y: 6.3}
   - {x: 3, y: 6.75}
   - {x: -3, y: 6.75}
+  asteroidSpawnPos: {x: 0, y: 5.5}
 --- !u!1 &1624387383
 GameObject:
   m_ObjectHideFlags: 0

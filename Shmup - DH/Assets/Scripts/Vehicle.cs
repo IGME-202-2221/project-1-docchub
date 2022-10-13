@@ -10,6 +10,7 @@ public class Vehicle : MonoBehaviour
     [SerializeField]
     float speed = 1f;
     public int health;
+    int prevHealth;
 
     [SerializeField]
     GameObject bullet;
@@ -27,11 +28,15 @@ public class Vehicle : MonoBehaviour
     const float screenWidthWall = 4f;
     const float screenHeightWall = 5f;
 
+    const float hitStateLength = 0.2f;
+
     // Start is called before the first frame update
     void Start()
     {
         vehiclePosition = transform.position;
         rapidFire = false;
+
+        prevHealth = health;
     }
 
     // Update is called once per frame
@@ -43,7 +48,15 @@ public class Vehicle : MonoBehaviour
         // Add velocity to our current position
         vehiclePosition += velocity;
 
+        // Draw at calculated position
         transform.position = vehiclePosition;
+
+        // Visualize losing health
+        if (prevHealth > health)
+        {
+            StartCoroutine(CheckHealth());
+            prevHealth = health;
+        }
 
         // Prevent moving outside the bounds
         if (vehiclePosition.x >= screenWidthWall)
@@ -85,7 +98,7 @@ public class Vehicle : MonoBehaviour
         }
         else if (!rapidFire)
         {
-            StopAllCoroutines();
+            StopCoroutine(RapidFire());
             cRunning = false;
         }
     }
@@ -139,5 +152,16 @@ public class Vehicle : MonoBehaviour
             yield return new WaitForSecondsRealtime(fireRate);
             bullets.Add(Instantiate(bullet, transform.position, Quaternion.identity, transform));
         }
+    }
+
+    /// <summary>
+    /// Adds a visual component to losing health
+    /// </summary>
+    IEnumerator CheckHealth()
+    {
+        this.GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSecondsRealtime(hitStateLength);
+        this.GetComponent<SpriteRenderer>().color = Color.white;
+        StopCoroutine(CheckHealth());
     }
 }
