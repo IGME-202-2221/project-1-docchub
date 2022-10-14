@@ -13,7 +13,7 @@
 -   Camera Movement: May implement a looping scrolling background
 -   Player Health: The player's health will be represented by a health bar
 -   End Condition: If the player survives a given level or enough waves of enemies, they may not necessarily have to defeat all enemies.
--   Scoring: Scoring will be done with bonuses for each enemy the player defeats.
+-   Scoring: Each enemy the player defeats rewards a number of points dependent on the type of enemy.
 
 ### Game Description
 
