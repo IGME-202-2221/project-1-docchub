@@ -17,15 +17,15 @@
 
 ### Game Description
 
-A top down shoot-em-up bullet hell where you control a spaceship fighting potatoes/asteroids in space.
+A 2 minute top down shoot-em-up bullet hell featuring enemy variety, and a few asteroids.
 
 ### Controls
 
 -   Movement
-    -   Up: W
-    -   Down: S 
-    -   Left: A
-    -   Right: D
+    -   Up: W / up arrow
+    -   Down: S / down arrow
+    -   Left: A / left arrow
+    -   Right: D / right arrow
 -   Fire: P
 
 ## Make it Your Own
@@ -41,7 +41,6 @@ Bomber - https://opengameart.org/content/spaceship-6
 Typeface (Dogica Pixel) - https://rmocci.itch.io/dogica
 
 ## Known Issues
-_List any errors, lack of error checking, or specific information that I need to know to run your program_
-
+n/a
 ### Requirements not completed
-_If you did not complete a project requirement, notate that here_
+n/a
