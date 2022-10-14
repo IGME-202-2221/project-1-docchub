@@ -7,6 +7,9 @@ public class CollisionManager : MonoBehaviour
     [SerializeField]
     GameObject playerPrefab;
 
+    public int playerDamage = 5;
+    const int enemyDamage = 5;
+
     GameObject player;
     List<GameObject> playerBullets = new List<GameObject>();
     List<GameObject> enemies = new List<GameObject>();
@@ -51,11 +54,23 @@ public class CollisionManager : MonoBehaviour
                         // Deal damage to enemy
                         if (a.name == "enemy1(Clone)")
                         {
-                            a.GetComponent<Enemy>().health -= 5;
+                            a.GetComponent<Enemy>().health -= playerDamage;
+                        }
+                        else if (a.name == "seeker(Clone)")
+                        {
+                            a.GetComponent<Seeker>().health -= playerDamage;
                         }
                         else if (a.name == "asteroid(Clone)" || a.name == "asteroidChild(Clone)")
                         {
-                            a.GetComponent<Asteroid>().health -= 5;
+                            a.GetComponent<Asteroid>().health -= playerDamage;
+                        }
+                        else if (a.name == "skipperbat(Clone)")
+                        {
+                            a.GetComponent<Skipperbat>().health -= playerDamage; 
+                        }
+                        else if (a.name == "bomber(Clone)")
+                        {
+                            a.GetComponent<Bomber>().health -= playerDamage;
                         }
 
                         // Destroy the bullet that collided with the enemy
@@ -82,9 +97,21 @@ public class CollisionManager : MonoBehaviour
         foreach (GameObject enemy in enemies)
         {
             // Only check for bullets from certain enemies
-            if (enemy.name == "enemy1(Clone)")
+            if (enemy.name == "enemy1(Clone)" || enemy.name == "seeker(Clone)" || enemy.name == "bomber(Clone)")
             {
-                enemyBullets = enemy.GetComponent<Enemy>().GetEnemyBullets();
+                // Get a reference to the relavent bullets
+                if (enemy.name == "enemy1(Clone)")
+                {
+                    enemyBullets = enemy.GetComponent<Enemy>().GetEnemyBullets();
+                }
+                else if (enemy.name == "seeker(Clone)")
+                {
+                    enemyBullets = enemy.GetComponent<Seeker>().GetEnemyBullets();
+                }
+                else if (enemy.name == "bomber(Clone)")
+                {
+                    enemyBullets = enemy.GetComponent<Bomber>().GetEnemyBullets();
+                }
 
                 // Check for collisions between the player and the enemy's bullets
                 if (enemyBullets != null && enemyBullets.Count > 0)
@@ -94,8 +121,8 @@ public class CollisionManager : MonoBehaviour
                         if (GetComponent<CollisionDetection>().AABBCollision(player, b))
                         {
                             // Deal damage to player
-                            player.GetComponent<Vehicle>().health -= 5;
-                            FindObjectOfType<Timer>().health -= 5;
+                            player.GetComponent<Vehicle>().health -= enemyDamage;
+                            FindObjectOfType<Timer>().health -= enemyDamage;
                             FindObjectOfType<HealthBar>().SetHealth(player.GetComponent<Vehicle>().health);
 
                             // Destroy the bullet that collided with the enemy
@@ -109,13 +136,13 @@ public class CollisionManager : MonoBehaviour
             }
             
             // Collisions for Asteroids on Player
-            else if (enemy.name == "asteroid(Clone)" || enemy.name == "asteroidChild(Clone)")
+            else if (enemy.name == "asteroid(Clone)" || enemy.name == "asteroidChild(Clone)" || enemy.name == "skipperbat(Clone)")
             {
                 if (GetComponent<CollisionDetection>().AABBCollision(player, enemy))
                 {
                     // Deal damage to player
-                    player.GetComponent<Vehicle>().health -= 5;
-                    FindObjectOfType<Timer>().health -= 5;
+                    player.GetComponent<Vehicle>().health -= enemyDamage;
+                    FindObjectOfType<Timer>().health -= enemyDamage;
                     FindObjectOfType<HealthBar>().SetHealth(player.GetComponent<Vehicle>().health);
 
                     // Destroy the object that collided with the enemy

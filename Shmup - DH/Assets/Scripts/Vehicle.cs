@@ -16,7 +16,7 @@ public class Vehicle : MonoBehaviour
     GameObject bullet;
     List<GameObject> bullets = new List<GameObject>();
 
-    Vector3 vehiclePosition = Vector3.zero;
+    public Vector3 vehiclePosition = Vector3.zero;
     Vector3 direction = Vector3.zero;
     Vector3 velocity = Vector3.zero;
 

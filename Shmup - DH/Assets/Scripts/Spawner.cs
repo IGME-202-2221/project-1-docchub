@@ -15,6 +15,15 @@ public class Spawner : MonoBehaviour
     GameObject children;
 
     [SerializeField]
+    GameObject seeker;
+
+    [SerializeField]
+    GameObject skipperbat;
+
+    [SerializeField]
+    GameObject bomber;
+
+    [SerializeField]
     Vector2[] spawnPositions;
 
     List<GameObject> enemies = new List<GameObject>();
@@ -32,6 +41,10 @@ public class Spawner : MonoBehaviour
         spawnEnemies = true;
         StartCoroutine(SpawnEnemies());
         StartCoroutine(SpawnAsteroids());
+        StartCoroutine(SpawnBats());
+        StartCoroutine(SpawnBombers());
+
+        SpawnSeeker();
     }
 
     // Update is called once per frame
@@ -40,6 +53,7 @@ public class Spawner : MonoBehaviour
         // Delete enemies after they exit the bounds of the screen
         foreach (GameObject e in enemies)
         {
+            // Delete logic for vanilla enemy
             if (e.name == "enemy1(Clone)")
             {
                 if (e.transform.position.y < -screenHeightWall)
@@ -52,12 +66,14 @@ public class Spawner : MonoBehaviour
                 // Only increase score if the player killed the enemy
                 else if (e.GetComponent<Enemy>().health <= 0)
                 {
-                    FindObjectOfType<Score>().ScoreUpdate();
+                    FindObjectOfType<Score>().ScoreUpdate(10);
                     Destroy(e);
                     enemies.Remove(e);
                     return;
                 }
-            }            
+            }
+
+            // Delete logic for asteroid enemy
             else if (e.name == "asteroid(Clone)" || e.name == "asteroidChild(Clone)")
             {
                 if (e.transform.position.y < -screenHeightWall)
@@ -70,8 +86,45 @@ public class Spawner : MonoBehaviour
                 // Only increase score if the player killed the enemy
                 else if (e.GetComponent<Asteroid>().health <= 0)
                 {
-                    FindObjectOfType<Score>().ScoreUpdate();
+                    FindObjectOfType<Score>().ScoreUpdate(20);
                     OnDeath(e);
+                    Destroy(e);
+                    enemies.Remove(e);
+                    return;
+                }
+            }
+
+            // Delete logic for seeker enemy
+            else if (e.name == "seeker(Clone)")
+            {
+                // Increase score if the player killed the enemy
+                if (e.GetComponent<Seeker>().health <= 0)
+                {
+                    FindObjectOfType<Score>().ScoreUpdate(500);
+                    Destroy(e);
+                    enemies.Remove(e);
+                    return;
+                }
+            }
+
+            else if (e.name == "skipperbat(Clone)")
+            {
+                // Increase score if the player killed the enemy
+                if (e.GetComponent<Skipperbat>().health <= 0)
+                {
+                    FindObjectOfType<Score>().ScoreUpdate(50);
+                    Destroy(e);
+                    enemies.Remove(e);
+                    return;
+                }
+            }
+
+            else if (e.name == "bomber(Clone)")
+            {
+                // Increase score if the player killed the enemy
+                if (e.GetComponent<Bomber>().health <= 0)
+                {
+                    FindObjectOfType<Score>().ScoreUpdate(35);
                     Destroy(e);
                     enemies.Remove(e);
                     return;
@@ -93,13 +146,29 @@ public class Spawner : MonoBehaviour
             yield return new WaitForSeconds(enemySpawnRate);
         }
     }
-
     IEnumerator SpawnAsteroids()
     {
         while (spawnEnemies)
         {
             SpawnAsteroid();
             yield return new WaitForSeconds(Random.Range(3f, 7f));
+        }
+    }
+    IEnumerator SpawnBats()
+    {
+        while (spawnEnemies)
+        {
+            SpawnBat();
+            yield return new WaitForSeconds(Random.Range(7f, 12f));
+        }
+    }
+
+    IEnumerator SpawnBombers()
+    {
+        while (spawnEnemies)
+        {
+            SpawnBomber();
+            yield return new WaitForSeconds(Random.Range(7f, 12f));
         }
     }
 
@@ -120,6 +189,24 @@ public class Spawner : MonoBehaviour
     void SpawnAsteroid()
     {
         enemies.Add(Instantiate(asteroid, new Vector2(Random.Range(-2f, 2f), 5.5f), Quaternion.identity, transform));
+    }
+
+    /// <summary>
+    /// Spawns a seeker enemy
+    /// </summary>
+    void SpawnSeeker()
+    {
+        enemies.Add(Instantiate(seeker, new Vector2(0, 4), new Quaternion(0, 0, 180, 0), transform));
+    }
+
+    void SpawnBat()
+    {
+        enemies.Add(Instantiate(skipperbat, new Vector2(Random.Range(-screenWidthWall, screenWidthWall), 5.5f), Quaternion.identity, transform));
+    }
+
+    void SpawnBomber()
+    {
+        enemies.Add(Instantiate(bomber, new Vector2(Random.Range(-2f, 2f), 5.5f), new Quaternion(0,0,180,0), transform));
     }
 
     /// <summary>

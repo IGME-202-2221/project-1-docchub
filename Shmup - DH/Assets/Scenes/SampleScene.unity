@@ -1188,6 +1188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 8328356400718606023, guid: abd5c9b807f501d47b0e28aae4156ab1, type: 3}
+  playerDamage: 5
 --- !u!4 &1382891583
 Transform:
   m_ObjectHideFlags: 0
@@ -1473,6 +1474,9 @@ MonoBehaviour:
   enemy: {fileID: 5477190401444312303, guid: 6e7c5fed98760e043907cee1242c5be0, type: 3}
   asteroid: {fileID: 3208592932549241786, guid: d40a652e52fa02548980162b43f5a168, type: 3}
   children: {fileID: 9103526394921931275, guid: 9689645eb8b6d15488b142170a2cf332, type: 3}
+  seeker: {fileID: 3661673246600998140, guid: 946b38d390f18d84eb8b7db93f639a78, type: 3}
+  skipperbat: {fileID: 6101792115602125551, guid: 1d405307cf6d8bc47b66ac0d7089db9c, type: 3}
+  bomber: {fileID: 1458945922773403878, guid: 4e4af19263a1ada48b94c087ca6c4e19, type: 3}
   spawnPositions:
   - {x: 0, y: 6}
   - {x: 1.5, y: 6.3}

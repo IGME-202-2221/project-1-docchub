@@ -10,9 +10,9 @@ public class Score : MonoBehaviour
 
     int score = 0;
 
-    public void ScoreUpdate()
+    public void ScoreUpdate(int points)
     {
-        score += 10;
+        score += points;
         scoreboard.text = string.Format("{0}", score);
     } 
 }
