@@ -37,6 +37,7 @@ Bullets - https://opengameart.org/content/bullet-collection-2-m484-games
 Asteroid - https://opengameart.org/content/brown-asteroid
 Typeface (Dogica Pixel) - https://rmocci.itch.io/dogica
 Seeker - https://opengameart.org/content/spaceship-4
+Skipperbat - https://opengameart.org/content/spaceship-5
 
 ## Known Issues
 _List any errors, lack of error checking, or specific information that I need to know to run your program_
