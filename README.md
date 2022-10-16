@@ -29,7 +29,8 @@ A 2 minute top down shoot-em-up bullet hell featuring enemy variety, and a few a
 -   Fire: P
 
 ## Make it Your Own
- * I will be implementing multiple enemy types as well as start and game over menus.
+ * 5 enemy types
+ * Countdown timer, player must survive for 2 minutes to win
 
 ## Sources
 Player/Enemy1 ship sprite - https://opengameart.org/content/spaceship-8
