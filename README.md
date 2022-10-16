@@ -41,6 +41,7 @@ Bomber - https://opengameart.org/content/spaceship-6
 Typeface (Dogica Pixel) - https://rmocci.itch.io/dogica
 
 ## Known Issues
-n/a
+Bullets disappear when the parent enemy is destroyed.
+
 ### Requirements not completed
 n/a
